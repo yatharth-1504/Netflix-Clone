@@ -1,0 +1,65 @@
+@import "../../index.scss";
+
+.navbar {
+  font-size: 15px;
+  color: white;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 999;
+  .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0px 50px;
+    height: 70px;
+    .left {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      img {
+        height: 25px;
+        padding: 10px;
+      }
+      span {
+        margin: 2px;
+        padding: 5px;
+        cursor: pointer;
+      }
+    }
+    .right {
+      .icons {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        .profile {
+          height: 40px;
+          border-radius: 15px;
+        }
+        .icon {
+          padding: 0 10px;
+          cursor: pointer;
+        }
+        .options {
+          .option {
+            display: none;
+            background-color: $main-color;
+            border-radius: 5px;
+          }
+          span {
+            padding: 10px;
+            cursor: pointer;
+          }
+          &:hover {
+            .option {
+              display: flex;
+              flex-direction: column;
+              top: 0;
+              position: absolute;
+            }
+          }
+        }
+      }
+    }
+  }
+}
