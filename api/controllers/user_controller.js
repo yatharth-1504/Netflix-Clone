@@ -13,7 +13,7 @@ module.exports.create = async (req, res) => {
   })
     .save()
     .then((user) => {
-      res.status(200).send(user);
+      res.status(200).json(user);
     })
     .catch((err) => {
       res.status(500).send(err);
@@ -33,7 +33,7 @@ module.exports.login = async (req, res) => {
         process.env.SECRET_KEY,
         { expiresIn: "5d" }
       );
-      return res.status(200).send({ status: true, accessToken: accessToken });
+      return res.status(200).json({ status: true, accessToken: accessToken });
     })
     .catch((err) => {
       return res.status(500).send(err);
@@ -48,7 +48,7 @@ module.exports.update = async (req, res) => {
       if (req.body.username) user.username = req.body.username;
       if (req.body.profile_pic) user.profile_pic = req.body.profile_pic;
       const userUpdated = await user.save();
-      return res.status(200).send({ status: "Updated", user: userUpdated });
+      return res.status(200).json({ status: "Updated", user: userUpdated });
     })
     .catch((e) => res.status(500).send(err));
 };
@@ -56,7 +56,7 @@ module.exports.update = async (req, res) => {
 // getMe
 module.exports.getMe = async (req, res) => {
   await User.findOne({ _id: req.decoded.id })
-    .then((user) => res.status(200).send({ user }))
+    .then((user) => res.status(200).json({ user }))
     .catch((e) => res.status(500).send(err));
 };
 
@@ -64,7 +64,7 @@ module.exports.getMe = async (req, res) => {
 module.exports.getAll = async (req, res) => {
   if (req.decoded.is_admin) {
     const users = await User.find();
-    return res.status(200).send(users);
+    return res.status(200).json({ users: users });
   } else {
     return res.status(401).send("Unauthorised");
   }
@@ -74,7 +74,7 @@ module.exports.getAll = async (req, res) => {
 module.exports.delete = async (req, res) => {
   await User.findByIdAndDelete({ id: req.decoded.id }, (err, userDeleted) => {
     if (err) return res.status(500).send(err);
-    return res.status(200).send({ status: "Deleted", user: userDeleted });
+    return res.status(200).json({ status: "Deleted", user: userDeleted });
   });
 };
 
@@ -138,7 +138,7 @@ module.exports._getStats = async (req, res) => {
     users.map((user) => {
       data[user.createdAt.getMonth() + 1]++;
     });
-    return res.status(200).send({ data });
+    return res.status(200).json({ data });
   } catch (e) {
     return res.status(500).send(e);
   }

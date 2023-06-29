@@ -4,7 +4,7 @@ const Movie = require("../models/movie");
 module.exports.add_movie = async (req, res) => {
   if (req.decoded.is_admin) {
     const movieCreated = await Movie.create(req.body).save();
-    return res.status(200).send({ movie: movieCreated });
+    return res.status(200).json({ movie: movieCreated });
   } else {
     res.status(500).send("Unauthorised");
   }
@@ -21,7 +21,7 @@ module.exports.update_movie = async (req, res) => {
         },
         { new: true }
       );
-      return res.status(200).send({ movie: movieUpdated });
+      return res.status(200).json({ movie: movieUpdated });
     } else {
       res.status(500).send("Unauthorised");
     }
@@ -34,7 +34,7 @@ module.exports.update_movie = async (req, res) => {
 module.exports.get_movie = async (req, res) => {
   try {
     const movie = await Movie.findOne({ _id: req.params.id });
-    return res.status(200).send({ movie });
+    return res.status(200).json({ movie });
   } catch (e) {
     res.status(401).send("Error Occured!");
   }
@@ -43,10 +43,10 @@ module.exports.get_movie = async (req, res) => {
 // get a random movie
 module.exports.get_random_movie = async (req, res) => {
   try {
-    const movies = await Movie.find({ is_series: req.body.is_series });
+    const movies = await Movie.find({ is_series: req.query.is_series });
     return res
       .status(200)
-      .send({ movie: movies[Math.floor(Math.random() * movies.length)] });
+      .json({ movie: movies[Math.floor(Math.random() * movies.length)] });
   } catch (e) {
     res.status(401).send("Error Occured!");
   }
@@ -62,7 +62,7 @@ module.exports.delete_movie = async (req, res) => {
       if (err) {
         return res.status(500).send(err);
       }
-      return res.status(200).send({ movie: movieDeleted });
+      return res.status(200).json({ movie: movieDeleted });
     });
   } catch (e) {
     res.status(401).send("Error Occured!");

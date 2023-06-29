@@ -1,25 +1,39 @@
-import logo from './logo.svg';
-import './App.css';
+import Sidebar from "./components/sidebar/Sidebar";
+import Topbar from "./components/nav/Topbar";
+import "./app.scss";
+import Home from "./pages/home/Home";
+import NewMedia from "./pages/new/NewMedia"
+import EditMedia from "./pages/edit/EditMedia";
+import MediaList from "./pages/list/MediaList";
+import UserList from "./pages/list/UserList";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
-function App() {
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Topbar />
+      <div className="container">
+        <Sidebar />
+        <Switch>
+          <Route exact path="/">
+            <Home />
+          </Route>
+          <Route path="/users">
+            <UserList />
+          </Route>
+          <Route path="/newmedia">
+            <NewMedia />
+          </Route>
+          <Route path="/editmedia">
+            <EditMedia />
+          </Route>
+          <Route path="/products">
+            <MediaList />
+          </Route>
+        </Switch>
+      </div>
+    </Router>
   );
-}
+};
 
 export default App;

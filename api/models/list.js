@@ -10,6 +10,6 @@ const listSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-const List = mongoose.Model("List", listSchema);
+const List = mongoose.model("List", listSchema);
 
 module.exports = List;
